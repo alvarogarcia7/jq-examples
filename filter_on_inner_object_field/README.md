@@ -27,9 +27,10 @@ Source: https://github.com/C2SP/wycheproof/blob/master/testvectors/ecdh_secp521r
 Note: this is pseudo-language SQL:
 
 ```sql
-SELECT distinct(result)
+SELECT count(*), result
 from testGroups[0].tests
 from ecdh_secp521r1_test.json
+group by result
 ```
 
 ```bash
@@ -42,10 +43,11 @@ cat ecdh_secp521r1_test.json | jq -r '.testGroups[0].tests[] | .result' | sort |
 ## Filter by an internal field
 
 ```sql
-SELECT distinct(length(t.public))
+SELECT count(*), length(t.public)
 from testGroups[0].tests t
 from ecdh_secp521r1_test.json
 where t.result == "invalid"
+group by length(t.public)
 ```
 
 ```bash
